@@ -24,7 +24,7 @@ namespace CST465_Armadillo
             {
                 app.UseDeveloperExceptionPage();
             }
-
+            app.UseStaticFiles();
             app.Run(async (context) =>
             {
                 await context.Response.WriteAsync("Hello World!");
