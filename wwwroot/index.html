@@ -6,9 +6,36 @@
         <link rel="stylesheet" href="/css/default.css" />
     </head>
     <body>
-        <div class=" container">
+        <div class="container">
             <main>
-                    <p>here is some content</p>
+                <p>here is some content</p>
+                <div class="row">
+                    <div class="col-sm-8 col-md-4">Left content</div>
+                    <div class="col-sm-4 ">Right Content</div>
+                    <div class="col-md-4 ">Further Right Content
+                        <div class="row">
+                            <div class="col-6">Left</div>
+                            <div class="col-6">Right</div>
+                        </div>
+                    </div>
+                </div>
+            
+                <div class="card">
+                    <div class="card-header">Card Header</div>
+                    <div class="card-body">
+                        <form>
+                            <div class="row">
+                                <div class="col-xs-3">
+                            <div class="form-group">
+                            <label for="Name" class="control-label">Name</label>
+                            <input type="text" class="form-control" name="Name" id="Name" />
+                        </div>
+                    </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <button class="btn btn-primary">Submit</button>
             </main>
             
         </div>

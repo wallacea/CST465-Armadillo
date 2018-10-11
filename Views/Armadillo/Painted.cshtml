@@ -1,0 +1,21 @@
+﻿@model IEnumerable<Armadillo>
+
+<h2>Painted Armadillos</h2>
+<ul class="list-group">
+    @foreach (var armadillo in Model)
+    {
+        <li class="list-group-item">
+            @armadillo.Name
+        </li>
+
+    }
+</ul>
+
+
+
+@section Sidebar{ 
+<ul>
+    <li><a href="http://www.google.com">Google</a></li>
+    <li><a href="http://www.google.com">Google</a></li>
+</ul>
+}

@@ -4,3 +4,6 @@ html, body{
 main{
     background-color: #fff;
 }
+.btn-primary{
+    background-color: #ff3333 !important;
+}

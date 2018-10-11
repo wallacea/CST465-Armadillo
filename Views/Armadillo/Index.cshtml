@@ -1,0 +1,26 @@
+﻿@model ArmadilloLib.ArmadilloFarm
+
+
+<h1>Armadillos Are As Amazing As Alliteration (Farm)</h1>
+<h2>Painted Armadillos</h2>
+
+    <ul class="list-group">
+        @foreach (var armadillo in Model.FarmAnimals.Where(a => a.IsPainted))
+        {
+            <li class="list-group-item">
+                @armadillo.Name
+            </li>
+
+        }
+    </ul>
+
+<h2>Unpainted Armadillos</h2>
+<ul class="list-group">
+    @foreach (var armadillo in Model.FarmAnimals.Where(a => !a.IsPainted))
+    {
+        <li class="list-group-item">
+            @armadillo.Name
+        </li>
+
+    }
+</ul>
