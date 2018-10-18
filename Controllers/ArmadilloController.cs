@@ -45,7 +45,9 @@ namespace CST465_Armadillo.Controllers
         [HttpGet]
         public IActionResult HTMLHelperForCreate()
         {
-            return View();
+            //ArmadilloModel model = new ArmadilloModel();
+            //model.PossibleHomelands =
+            return View(new ArmadilloModel());
         }
         [HttpGet]
         public IActionResult TagHelperCreate()
@@ -71,6 +73,7 @@ namespace CST465_Armadillo.Controllers
             return Create(model);
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult HTMLHelperForCreate(ArmadilloModel model)
         {
             if (!ModelState.IsValid)

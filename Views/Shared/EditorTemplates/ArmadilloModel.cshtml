@@ -1,0 +1,34 @@
+﻿@model ArmadilloModel
+
+<div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Name, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Name)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Age, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.Age, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Age)
+    </div>
+    @*<div class="form-group">
+        @Html.LabelFor(m => m.ShellHardness, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.ShellHardness, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.ShellHardness)
+    </div>*@
+    <div class="form-group">
+        <label asp-for="ShellHardness" class="control-label"></label>
+        <input asp-for="ShellHardness" type="number" class="form-control" />
+        <span asp-validation-for="ShellHardness"></span>
+    </div>
+    <div class="form-group">
+        <label class="control-label">
+            @Html.CheckBoxFor(m => m.IsPainted, new { @class = "form-check" })
+            Is it Painted?
+        </label>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Homeland, new { @class = "control-label" })
+        @Html.DropDownListFor(m => m.Homeland, new SelectList(Model.PossibleHomelands), new { @class = "form-control" })
+    </div>
+</div>

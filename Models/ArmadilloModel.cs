@@ -9,15 +9,21 @@ namespace CST465_Armadillo.Models
 {
     public class ArmadilloModel
     {
-        [Required(ErrorMessage="You must give it a name!")]
+        [Required(ErrorMessage = "You must give it a name!")]
         [DisplayName("Armadillo's Name")]
         [RegularExpression("^(Other\\s)?Paul$", ErrorMessage = "Only Paul or Other Paul are valid")]
-        [DataType(DataType.Password)]
+
         public string Name { get; set; }
         [Required]
         [DisplayName("How old is ya?")]
         public int Age { get; set; }
         public int ShellHardness { get; set; }
         public bool IsPainted { get; set; }
+        [Required]
+        public string Homeland { get; set; }
+
+        public List<string> PossibleHomelands = new List<string>() { "Tanzania", "United States of America", "Mexico" };
+
+
     }
 }
