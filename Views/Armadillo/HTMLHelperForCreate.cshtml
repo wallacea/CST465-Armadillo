@@ -1,0 +1,25 @@
+﻿@model ArmadilloModel
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h2>Create an Armadillo</h2>
+
+@using (Html.BeginForm(FormMethod.Post))
+{
+    @Html.EditorForModel()
+
+<div class="form-group">
+        @Html.LabelFor(m => m.Name, new { @class = "control-label" })
+        @Html.EditorFor(m => m.Name)
+        @*@Html.LabelFor(m => m.Name, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Name)*@
+
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Age, new { @class = "control-label pomeroy", gibberish="notgood" })
+        @Html.TextBoxFor(m => m.Age, new { @class = "form-control" })
+    </div>
+    <button type="submit" class="btn btn-primary">Save Armadillo</button>
+}

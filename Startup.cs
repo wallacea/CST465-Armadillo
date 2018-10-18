@@ -27,13 +27,12 @@ namespace CST465_Armadillo
                 app.UseDeveloperExceptionPage();
             }
             app.UseStaticFiles();
-            //app.UseMvcWithDefaultRoute();
-            app.UseMvc(routes => {
-                routes.MapRoute("default", "{controller=Armadillo}/{action=Index}/{id?}");
-                routes.MapRoute("otherroute", "peanut-butter/{action=Index}/{id?}", new { controller = "Home" });
-            });
-
-            Armadillo bob = new Armadillo();
+            app.UseMvcWithDefaultRoute();
+            //app.UseMvc(routes => {
+            //    routes.MapRoute("default", "{controller=Armadillo}/{action=Index}/{id?}");
+            //    routes.MapRoute("otherroute", "peanut-butter/{action=Index}/{id?}", new { controller = "Home" });
+            //});
+            
         }
     }
 }

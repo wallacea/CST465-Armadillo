@@ -1,7 +1,5 @@
 ﻿@model string
     <h1>Armadillos Are As Amazing As Alliteration</h1>
-    
-    <div>
-        The ID is:
-        @Model
-   </div>
+  @Html.ActionLink("Go to Armadillo", "Index", "Armadillo")
+<a href="/Armadillo/Index">Go to Armadillo</a>
+The good URL is @Url.Action("Index", "Armadillo")

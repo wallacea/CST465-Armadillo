@@ -1,0 +1,19 @@
+﻿@model ArmadilloModel
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h2>Create an Armadillo</h2>
+
+<form method="post" asp-action="TagHelperCreate" asp-controller="Armadillo">
+    <div class="form-group">
+        <label asp-for="Name" class="control-label"></label>
+        <input type="text" asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Age" class="control-label"></label>
+        <input type="text" asp-for="Age" class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-primary">Save Armadillo</button>
+</form>

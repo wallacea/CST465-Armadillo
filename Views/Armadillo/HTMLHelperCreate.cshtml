@@ -1,0 +1,19 @@
+﻿@model Armadillo
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h2>Create an Armadillo</h2>
+
+@using (Html.BeginForm(FormMethod.Post))
+{
+    <div class="form-group">
+        @Html.Label("Name", "Name", new { @class = "control-label" })
+        @Html.TextBox("Name","", new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.Label("Age", "Age", new { @class = "control-label" })
+        @Html.TextBox("Age", "", new { @class = "form-control" })
+    </div>
+    <button type="submit" class="btn btn-primary">Save Armadillo</button>
+}
