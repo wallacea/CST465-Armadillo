@@ -26,6 +26,7 @@ namespace CST465_Armadillo
             {
                 app.UseDeveloperExceptionPage();
             }
+            app.UseCookiePolicy();
             app.UseStaticFiles();
             app.UseMvcWithDefaultRoute();
             //app.UseMvc(routes => {
