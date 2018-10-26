@@ -21,8 +21,15 @@
                     @Html.ActionLink("Home", "Index", "Home", null, new { @class = "nav-link" })
                 </li>
                 <li class="nav-item @(ViewContext.RouteData.Values["Controller"].ToString() == "Armadillo" ? "active" : "")">
-                    @Html.ActionLink("Armadillo Farm", "Index", "Armadillo", null, new { @class = "nav-link" })
+                    @Html.ActionLink("The Farm", "Index", "Armadillo", null, new { @class = "nav-link" })
                 </li>
+                <li class="nav-item @(ViewContext.RouteData.Values["Controller"].ToString() == "Armadillo" ? "active" : "")">
+                    @Html.ActionLink("Add an Armadillo", "TagHelperCreate", "Armadillo", null, new { @class = "nav-link" })
+                </li>
+                <li class="nav-item @(ViewContext.RouteData.Values["Controller"].ToString() == "Armadillo" ? "active" : "")">
+                    @Html.ActionLink("Bulk Edit", "BulkEdit", "Armadillo", null, new { @class = "nav-link" })
+                </li>
+
             </ul>
         </nav>
     </div>

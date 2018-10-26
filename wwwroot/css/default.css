@@ -5,9 +5,7 @@ html, body{
     background-color: #fff;
     padding: 10px;
 }
-.btn-primary{
-    background-color: #ff3333 !important;
-}
+
 .input-validation-error {
     background-color: pink !important;
 }

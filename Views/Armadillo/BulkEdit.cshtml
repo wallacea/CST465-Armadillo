@@ -1,0 +1,23 @@
+﻿@*@model ArmadilloFarmModel*@
+@model List<ArmadilloModel>
+<form asp-controller="Armadillo" asp-action="BulkEdit" method="post">
+    <table>
+        <thead>
+            <tr>
+                <td>Name</td>
+                <td>Age</td>
+                <td>Shell Hardness</td>
+                <td>Is Painted</td>
+                <td>Homeland</td>
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < Model.Count; i++)
+            {
+                <partial name="~/Views/Shared/EditorTemplates/ArmadilloPartial.cshtml" for="ToArray()[i]" />
+            }
+        </tbody>
+    </table>
+    
+    <button type="submit">Save</button>
+</form>

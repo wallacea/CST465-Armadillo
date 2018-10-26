@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -9,9 +10,10 @@ namespace CST465_Armadillo.Models
 {
     public class ArmadilloModel
     {
+        public int ID { get; set; }
         [Required(ErrorMessage = "You must give it a name!")]
         [DisplayName("Armadillo's Name")]
-        [RegularExpression("^(Other\\s)?Paul$", ErrorMessage = "Only Paul or Other Paul are valid")]
+        //[RegularExpression("^(Other\\s)?Paul$", ErrorMessage = "Only Paul or Other Paul are valid")]
         
         public string Name { get; set; }
         [Required]
@@ -19,12 +21,18 @@ namespace CST465_Armadillo.Models
         public int Age { get; set; }
         [Required]
         public int? ShellHardness { get; set; }
+        [DisplayName("Is Painted?")]
         public bool IsPainted { get; set; }
-        [Required]
+        
         [UIHint("HomelandDropdown")]
         public string Homeland { get; set; }
 
-        public static readonly List<string> PossibleHomelands = new List<string>() { "Tanzania", "United States of America", "Mexico" };
+        public static  List<SelectListItem> PossibleHomelands = new List<SelectListItem>()
+        {
+            new SelectListItem("Tanzania", "Tanzania"),
+            new SelectListItem("United States of America", "United States of America"),
+            new SelectListItem("Mexico", "Mexico")
+        };
 
 
     }

@@ -6,30 +6,44 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using ArmadilloLib;
 using CST465_Armadillo.Models;
+using CST465_Armadillo.Repositories;
+using Microsoft.Extensions.Configuration;
+using System.IO;
 
 namespace CST465_Armadillo.Controllers
 {
     
     public class ArmadilloController : Controller
     {
-        //[Route("/Armadillo/{name}")]
-        
-        public IActionResult Index(string name="")
+        private IArmadilloRepository _ArmadilloRepo;
+        private ArmadilloFarm _Farm;
+        public ArmadilloController()
         {
-            ArmadilloFarm farm = new ArmadilloFarm();
-            if (!string.IsNullOrEmpty(name))
-            {
-                
-                farm.FarmAnimals.Add(new Armadillo { Name = "Idid", Age = 5, IsPainted = false });
-                farm.FarmAnimals.Add(new Armadillo { Name = "Ididnt", Age = 7, IsPainted = true });
-            }
-            else
-            {
-                
-                farm.FarmAnimals.Add(new Armadillo { Name = "Bob", Age = 5, IsPainted = false });
-                farm.FarmAnimals.Add(new Armadillo { Name = "Roger", Age = 7, IsPainted = true });
-            }
-            return View(farm);
+            _ArmadilloRepo = new ArmadilloDBRepository();
+            _Farm = new ArmadilloFarm();
+            _Farm.FarmAnimals.AddRange(_ArmadilloRepo.GetList());
+        }
+        //[Route("/Armadillo/{name}")]
+        //public IActionResult Index(string name="")
+        public IActionResult Index()
+        {
+            IConfigurationBuilder builder = new ConfigurationBuilder()
+                 .SetBasePath(Directory.GetCurrentDirectory())
+             
+             .AddJsonFile("farmsettings.json", optional: false, reloadOnChange: true)
+             .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
+            
+            var configuration = builder.Build();
+            //FarmSettings farmSettings = new FarmSettings();
+            //configuration.Bind(farmSettings);
+            FarmSettings farmSettings = configuration.Get<FarmSettings>();
+            ViewBag.FarmSettings = farmSettings;
+            return View(_Farm);
+        }
+        public PartialViewResult FeaturedArmadillo()
+        {
+            
+            return PartialView("_FeaturedArmadillo", _Farm.FeaturedArmadillo);
         }
         
         [HttpGet]
@@ -93,7 +107,48 @@ namespace CST465_Armadillo.Controllers
         }
         protected IActionResult Create(ArmadilloModel model)
         {
-            return View("ArmadilloCreated", model);
+            Armadillo armadillo = new Armadillo();
+            armadillo.Name = model.Name;
+            armadillo.Age = model.Age;
+            armadillo.ShellHardness = model.ShellHardness ?? 0;
+            armadillo.IsPainted = model.IsPainted;
+            armadillo.Homeland = model.Homeland;
+            _ArmadilloRepo.Save(armadillo);
+
+            return RedirectToAction("Index", model);
+        }
+        [HttpGet]
+        public IActionResult Edit(int id)
+        {
+            var armadillo = _ArmadilloRepo.Get(id);
+            ArmadilloModel model = new ArmadilloModel()
+            {
+                ID = armadillo.ID,
+                Name = armadillo.Name,
+                Age = armadillo.Age,
+                ShellHardness = armadillo.ShellHardness,
+                IsPainted = armadillo.IsPainted,
+                Homeland = armadillo.Homeland
+
+            };
+            return View(model);
+        }
+        [HttpPost]
+        public IActionResult Edit(ArmadilloModel model)
+        {
+            if(!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            Armadillo armadillo = new Armadillo();
+            armadillo.ID = model.ID;
+            armadillo.Name = model.Name;
+            armadillo.Age = model.Age;
+            armadillo.ShellHardness = model.ShellHardness ?? 0;
+            armadillo.IsPainted = model.IsPainted;
+            armadillo.Homeland = model.Homeland;
+            _ArmadilloRepo.Save(armadillo);
+            return RedirectToAction("Index", model);
         }
         public IActionResult Painted()
         {
@@ -106,6 +161,39 @@ namespace CST465_Armadillo.Controllers
             farm.FarmAnimals.Add(new Armadillo { Name = "Bob", Age = 5, IsPainted = false });
             farm.FarmAnimals.Add(new Armadillo { Name = "Roger", Age = 7, IsPainted = true });
             return View(farm.FarmAnimals.Where(a => a.IsPainted));
+        }
+        [HttpGet]
+        public IActionResult BulkEdit()
+        {
+            List<ArmadilloModel> armadillos = new List<ArmadilloModel>();
+            
+            _Farm.FarmAnimals.ForEach(arm =>
+            armadillos.Add(new ArmadilloModel()
+            {
+                ID = arm.ID,
+                Name = arm.Name,
+                Age = arm.Age,
+                ShellHardness = arm.ShellHardness,
+                Homeland = arm.Homeland,
+                IsPainted=arm.IsPainted
+            }
+            ));
+
+            return View(armadillos);
+        }
+        [HttpPost]
+        public IActionResult BulkEdit(List<ArmadilloModel> model)//ArmadilloFarmModel model)
+        {
+            if(!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            foreach(var armadillo in model)
+            {
+                _ArmadilloRepo.Save()
+            }
+            //throw new Exception(model.Count.ToString());
+            return RedirectToAction("Index");
         }
     }
 }

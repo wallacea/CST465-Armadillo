@@ -7,16 +7,23 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using ArmadilloLib;
+using Microsoft.Extensions.Configuration;
 
 namespace CST465_Armadillo
 {
     public class Startup
     {
+        public IConfiguration _Configuration;
+        public Startup(IConfiguration configuration)
+        {
+            _Configuration = configuration;
+        }
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+            services.Configure<FarmSettings>(_Configuration.GetSection("FarmSettings"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -29,11 +36,7 @@ namespace CST465_Armadillo
             app.UseCookiePolicy();
             app.UseStaticFiles();
             app.UseMvcWithDefaultRoute();
-            //app.UseMvc(routes => {
-            //    routes.MapRoute("default", "{controller=Armadillo}/{action=Index}/{id?}");
-            //    routes.MapRoute("otherroute", "peanut-butter/{action=Index}/{id?}", new { controller = "Home" });
-            //});
-            
+           
         }
     }
 }
