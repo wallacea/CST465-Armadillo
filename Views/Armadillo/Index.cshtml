@@ -1,26 +1,47 @@
-﻿@model ArmadilloLib.ArmadilloFarm
+﻿@using CST465_Armadillo
+@model ArmadilloFarm
 
 
 <h1>Armadillos Are As Amazing As Alliteration (Farm)</h1>
-<h2>Painted Armadillos</h2>
+<div>
+    <h2>Farm Settings</h2>
+    @{ FarmSettings settings = ViewBag.FarmSettings;}
+    Max Animals: @settings.MaxAnimals
+    <br />
+    Max per Homeland: @settings.MaxPerHomeland
+</div>
+<div class="row">
+    <div class="col-sm-6">
+        <h2>Painted Armadillos</h2>
 
-    <ul class="list-group">
-        @foreach (var armadillo in Model.FarmAnimals.Where(a => a.IsPainted))
-        {
-            <li class="list-group-item">
-                @armadillo.Name
-            </li>
+        <ul class="list-group">
+            @foreach (var armadillo in Model.FarmAnimals.Where(a => a.IsPainted))
+            {
+                <li class="list-group-item">
+                    @armadillo.Name
+                </li>
 
-        }
-    </ul>
+            }
+        </ul>
+    </div>
+    <div class="col-sm-6">
 
-<h2>Unpainted Armadillos</h2>
-<ul class="list-group">
-    @foreach (var armadillo in Model.FarmAnimals.Where(a => !a.IsPainted))
-    {
-        <li class="list-group-item">
-            @armadillo.Name
-        </li>
+        <h2>Unpainted Armadillos</h2>
+        <ul class="list-group">
+            @foreach (var armadillo in Model.FarmAnimals.Where(a => !a.IsPainted))
+            {
+                <li class="list-group-item">
+                    @Html.ActionLink("Edit", "Edit", "Armadillo", new { @id = armadillo.ID })
+                    @armadillo.Name
+                </li>
 
-    }
-</ul>
+            }
+        </ul>
+    </div>
+
+</div>
+
+@section Sidebar{
+    <partial name="_FeaturedArmadillo" for="FeaturedArmadillo" />
+}
+
