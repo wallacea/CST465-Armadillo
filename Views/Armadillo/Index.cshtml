@@ -31,8 +31,21 @@
             @foreach (var armadillo in Model.FarmAnimals.Where(a => !a.IsPainted))
             {
                 <li class="list-group-item">
-                    @Html.ActionLink("Edit", "Edit", "Armadillo", new { @id = armadillo.ID })
-                    @armadillo.Name
+                    <div class="row">
+                        <div class="col">
+                            @Html.ActionLink("Edit", "Edit", "Armadillo", new { @id = armadillo.ID })
+                        </div>
+                        <div class="col">
+                            @armadillo.Name
+                        </div>
+                        <div class="col">
+                            <form asp-action="Delete" asp-controller="Armadillo" method="post">
+                                @Html.AntiForgeryToken()
+                                <input type="hidden" name="id" value="@armadillo.ID" />
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </form>
+                        </div>
+                    </div>
                 </li>
 
             }

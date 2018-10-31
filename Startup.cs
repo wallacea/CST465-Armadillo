@@ -23,7 +23,8 @@ namespace CST465_Armadillo
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
-            services.Configure<FarmSettings>(_Configuration.GetSection("FarmSettings"));
+            services.Configure<FarmSettings>(_Configuration);
+            services.Configure<ArmadilloSettings>(_Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -36,7 +37,10 @@ namespace CST465_Armadillo
             app.UseCookiePolicy();
             app.UseStaticFiles();
             app.UseMvcWithDefaultRoute();
-           
+            string baseDir = env.ContentRootPath;
+
+            AppDomain.CurrentDomain.SetData("DataDirectory", System.IO.Path.Combine(baseDir, "App_Data"));
+
         }
     }
 }
