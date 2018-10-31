@@ -12,7 +12,12 @@ namespace CST465_Armadillo.ExtensionMethods
         public static Armadillo GetArmadilloObject(this ArmadilloModel model)
         {
             Armadillo armadillo = new Armadillo();
-            
+            armadillo.ID = model.ID;
+            armadillo.Name = model.Name;
+            armadillo.Age = model.Age;
+            armadillo.ShellHardness = model.ShellHardness ?? 0;
+            armadillo.IsPainted = model.IsPainted;
+            armadillo.Homeland = model.Homeland;
             return armadillo;
         }
         public static ArmadilloModel GetArmadilloModel(this Armadillo armadillo)

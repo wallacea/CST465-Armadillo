@@ -12,9 +12,14 @@
             </tr>
         </thead>
         <tbody>
+            @*@foreach (var armadillo in Model)
+            {
+                <partial name="_ArmadilloPartial" for="@armadillo" />
+            }*@
             @for (int i = 0; i < Model.Count; i++)
             {
-                <partial name="~/Views/Shared/EditorTemplates/ArmadilloPartial.cshtml" for="ToArray()[i]" />
+                @*<partial name="_ArmadilloPartial" for="ToArray()[i]" />*@
+                <partial name="_ArmadilloPartial" for="@Model[i]" />
             }
         </tbody>
     </table>

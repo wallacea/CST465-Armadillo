@@ -7,34 +7,81 @@
     </head>
     <body>
         <div class="container">
-            <main>
+            <main style="background-color: #fff; padding:10px;">
+                <form>
+                    <div class="row">
+                        <div class="col-4">
+                            <label class="control-label">Name</label>
+                            <input type="text" class="form-control" />
+                        </div>
+                        <div class="col-4">
+                            <label class="control-label">Favorite Candy</label>
+                            <select class="form-control">
+                                <option>Twix</option>
+                            </select>
+                        </div>
+                        <div class="col-4">
+                            <label class="control-label">Costume</label>
+                            <select class="form-control">
+                                <option>Twix</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+                <p></p><p></p>
+                <h2>Trick or Treaters</h2>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Favorite Candy</th>
+                            <th>Costume</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Abe</td>
+                            <td>Kit Kat</td>
+                            <td>Ghost</td>
+                        </tr>
+                        <tr>
+                            <td>Mary</td>
+                            <td>Snickers</td>
+                            <td>Witch</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <p></p><p></p>
                 <p>here is some content</p>
                 <div class="row">
                     <div class="col-sm-8 col-md-4">Left content</div>
                     <div class="col-sm-4 ">Right Content</div>
-                    <div class="col-md-4 ">Further Right Content
+                    <div class="col-md-4 ">
+                        Further Right Content
                         <div class="row">
                             <div class="col-6">Left</div>
                             <div class="col-6">Right</div>
                         </div>
                     </div>
                 </div>
-            
+
                 <div class="card">
                     <div class="card-header">Card Header</div>
                     <div class="card-body">
                         <form>
                             <div class="row">
                                 <div class="col-xs-3">
-                            <div class="form-group">
-                            <label for="Name" class="control-label">Name</label>
-                            <input type="text" class="form-control" name="Name" id="Name" />
-                        </div>
-                    </div>
-                            </form>
-                        </div>
+                                    <div class="form-group">
+                                        <label for="Name" class="control-label">Name</label>
+                                        <input type="text" class="form-control" name="Name" id="Name" />
+                                    </div>
+                                </div>
+                        </form>
                     </div>
                 </div>
+</div>
                 <button class="btn btn-primary">Submit</button>
             </main>
             

@@ -19,10 +19,10 @@ namespace CST465_Armadillo.Repositories
                 .SetBasePath(Directory.GetCurrentDirectory())
             .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
             .AddJsonFile("farmsettings.json", optional: false, reloadOnChange: true);
-         
+
 
             var configuration = builder.Build();
-            
+
             return configuration.GetConnectionString("DB_TheFarm");
 
         }
@@ -44,7 +44,7 @@ namespace CST465_Armadillo.Repositories
                             armadillo.ID = (int) reader["ID"];
                             armadillo.Name = reader["Name"].ToString();
                             armadillo.Age = (int) reader["Age"];
-                            armadillo.ShellHardness = (int) reader["Age"];
+                            armadillo.ShellHardness = (int) reader["ShellHardness"];
                             armadillo.IsPainted = (bool) reader["IsPainted"];
                             armadillo.Homeland = reader["Homeland"].ToString();
                         }
@@ -70,10 +70,10 @@ namespace CST465_Armadillo.Repositories
                         while (reader.Read())
                         {
                             Armadillo armadillo = new Armadillo();
-                            armadillo.ID = (int)reader["ID"];
+                            armadillo.ID = (int) reader["ID"];
                             armadillo.Name = reader["Name"].ToString();
                             armadillo.Age = (int) reader["Age"];
-                            armadillo.ShellHardness = (int) reader["Age"];
+                            armadillo.ShellHardness = (int) reader["ShellHardness"];
                             armadillo.IsPainted = (bool) reader["IsPainted"];
                             armadillo.Homeland = reader["Homeland"].ToString();
                             armadilloList.Add(armadillo);
@@ -106,6 +106,21 @@ namespace CST465_Armadillo.Repositories
                     command.ExecuteNonQuery();
                 }
             }
+        }
+        public void Delete(int id)
+        {
+            using (SqlConnection connection = new SqlConnection(GetConnectionString()))
+            {
+                using (SqlCommand command = new SqlCommand("Armadillo_Delete", connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+                    connection.Open();
+                    
+                    command.Parameters.AddWithValue("@ID", id);
+                    
+                    command.ExecuteNonQuery();
+                }
+            }
+        }
     }
-}
 }

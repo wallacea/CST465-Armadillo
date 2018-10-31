@@ -11,5 +11,6 @@ namespace CST465_Armadillo.Repositories
         Armadillo Get(int id);
         List<Armadillo> GetList();
         void Save(Armadillo armadillo);
+        void Delete(int id);
     }
 }

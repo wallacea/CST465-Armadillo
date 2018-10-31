@@ -9,16 +9,26 @@ using CST465_Armadillo.Models;
 using CST465_Armadillo.Repositories;
 using Microsoft.Extensions.Configuration;
 using System.IO;
+using CST465_Armadillo.ExtensionMethods;
+using Microsoft.Extensions.Options;
 
 namespace CST465_Armadillo.Controllers
 {
-    
+
     public class ArmadilloController : Controller
     {
         private IArmadilloRepository _ArmadilloRepo;
         private ArmadilloFarm _Farm;
-        public ArmadilloController()
+        private FarmSettings _Settings;
+        public ArmadilloController(IOptionsSnapshot<FarmSettings> settings)
         {
+            _Settings = settings.Value;
+            //IConfigurationBuilder builder = new ConfigurationBuilder()
+            //     .SetBasePath(Directory.GetCurrentDirectory())
+
+            // .AddJsonFile("farmsettings.json", optional: false, reloadOnChange: true)
+            // .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
+            //var configuration = builder.Build();
             _ArmadilloRepo = new ArmadilloDBRepository();
             _Farm = new ArmadilloFarm();
             _Farm.FarmAnimals.AddRange(_ArmadilloRepo.GetList());
@@ -26,26 +36,20 @@ namespace CST465_Armadillo.Controllers
         //[Route("/Armadillo/{name}")]
         //public IActionResult Index(string name="")
         public IActionResult Index()
-        {
-            IConfigurationBuilder builder = new ConfigurationBuilder()
-                 .SetBasePath(Directory.GetCurrentDirectory())
-             
-             .AddJsonFile("farmsettings.json", optional: false, reloadOnChange: true)
-             .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
-            
-            var configuration = builder.Build();
+        {   
             //FarmSettings farmSettings = new FarmSettings();
             //configuration.Bind(farmSettings);
-            FarmSettings farmSettings = configuration.Get<FarmSettings>();
-            ViewBag.FarmSettings = farmSettings;
+//            FarmSettings farmSettings = configuration.Get<FarmSettings>();
+            ViewBag.FarmSettings = _Settings;
+            //ViewData["FarmSettings"] = _Settings;
             return View(_Farm);
         }
         public PartialViewResult FeaturedArmadillo()
         {
-            
+
             return PartialView("_FeaturedArmadillo", _Farm.FeaturedArmadillo);
         }
-        
+
         [HttpGet]
         public IActionResult HTMLCreate()
         {
@@ -136,7 +140,7 @@ namespace CST465_Armadillo.Controllers
         [HttpPost]
         public IActionResult Edit(ArmadilloModel model)
         {
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 return View(model);
             }
@@ -166,33 +170,47 @@ namespace CST465_Armadillo.Controllers
         public IActionResult BulkEdit()
         {
             List<ArmadilloModel> armadillos = new List<ArmadilloModel>();
-            
-            _Farm.FarmAnimals.ForEach(arm =>
-            armadillos.Add(new ArmadilloModel()
+
+            _Farm.FarmAnimals.ForEach(animal =>
             {
-                ID = arm.ID,
-                Name = arm.Name,
-                Age = arm.Age,
-                ShellHardness = arm.ShellHardness,
-                Homeland = arm.Homeland,
-                IsPainted=arm.IsPainted
-            }
-            ));
+                armadillos.Add(animal.GetArmadilloModel());
+            });
+            //_Farm.FarmAnimals.ForEach(arm =>
+            //armadillos.Add(new ArmadilloModel()
+            //{
+            //    ID = arm.ID,
+            //    Name = arm.Name,
+            //    Age = arm.Age,
+            //    ShellHardness = arm.ShellHardness,
+            //    Homeland = arm.Homeland,
+            //    IsPainted = arm.IsPainted
+            //}
+            //));
+            
+            //armadillos.Add(new ArmadilloModel());
+            
 
             return View(armadillos);
         }
         [HttpPost]
         public IActionResult BulkEdit(List<ArmadilloModel> model)//ArmadilloFarmModel model)
         {
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 return View(model);
             }
-            foreach(var armadillo in model)
+            foreach (var armadillo in model)
             {
-                _ArmadilloRepo.Save()
+                _ArmadilloRepo.Save(armadillo.GetArmadilloObject());
             }
             //throw new Exception(model.Count.ToString());
+            return RedirectToAction("Index");
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Delete(int id)
+        {
+            _ArmadilloRepo.Delete(id);
             return RedirectToAction("Index");
         }
     }

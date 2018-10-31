@@ -1,5 +1,8 @@
-﻿@model string
-    <h1>Armadillos Are As Amazing As Alliteration</h1>
-  @Html.ActionLink("Go to Armadillo", "Index", "Armadillo")
-<a href="/Armadillo/Index">Go to Armadillo</a>
-The good URL is @Url.Action("Index", "Armadillo")
+﻿@using CST465_Armadillo
+@{ ArmadilloSettings settings = (ArmadilloSettings)ViewData["Settings"];}
+@settings.DefaultName
+
+@*<h1>Armadillos Are As Amazing As Alliteration</h1>
+      @Html.ActionLink("Go to Armadillo", "Index", "Armadillo")
+    <a href="/Armadillo/Index">Go to Armadillo</a>
+    The good URL is @Url.Action("Index", "Armadillo")*@
