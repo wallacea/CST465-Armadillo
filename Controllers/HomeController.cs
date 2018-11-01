@@ -32,7 +32,10 @@ namespace CST465_Armadillo.Controllers
             //return View(candies);
             return View();
         }
-        
+        public IActionResult Error()
+        {
+            return View();
+        }
         public IActionResult OtherStuff()
         {
             return View();

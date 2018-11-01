@@ -8,16 +8,22 @@ using System.Linq;
 using System.Threading.Tasks;
 using ArmadilloLib;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 
 namespace CST465_Armadillo.Repositories
 {
     public class ArmadilloDBRepository : IArmadilloRepository
     {
+        private ArmadilloSettings _Settings;
+        public ArmadilloDBRepository(IOptions<ArmadilloSettings> armadilloConfig)
+        {
+            _Settings = armadilloConfig.Value;
+        }
         public string GetConnectionString()
         {
             IConfigurationBuilder builder = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
-            .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+            .AddJsonFile(_Settings.DatabaseConfigFile, optional: false, reloadOnChange: true)
             .AddJsonFile("farmsettings.json", optional: false, reloadOnChange: true);
 
 

@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using ArmadilloLib;
 using Microsoft.Extensions.Configuration;
+using CST465_Armadillo.Repositories;
 
 namespace CST465_Armadillo
 {
@@ -25,6 +26,7 @@ namespace CST465_Armadillo
             services.AddMvc();
             services.Configure<FarmSettings>(_Configuration);
             services.Configure<ArmadilloSettings>(_Configuration);
+            services.AddTransient<IArmadilloRepository, ArmadilloDBRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -34,7 +36,11 @@ namespace CST465_Armadillo
             {
                 app.UseDeveloperExceptionPage();
             }
-            app.UseCookiePolicy();
+            else
+            {
+                app.UseExceptionHandler("/Home/Error");
+            }
+            
             app.UseStaticFiles();
             app.UseMvcWithDefaultRoute();
             string baseDir = env.ContentRootPath;
