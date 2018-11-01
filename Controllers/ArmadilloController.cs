@@ -20,7 +20,7 @@ namespace CST465_Armadillo.Controllers
         private IArmadilloRepository _ArmadilloRepo;
         private ArmadilloFarm _Farm;
         private FarmSettings _Settings;
-        public ArmadilloController(IOptionsSnapshot<FarmSettings> settings)
+        public ArmadilloController(IOptionsSnapshot<FarmSettings> settings, IArmadilloRepository armadilloRepo)
         {
             _Settings = settings.Value;
             //IConfigurationBuilder builder = new ConfigurationBuilder()
@@ -29,14 +29,16 @@ namespace CST465_Armadillo.Controllers
             // .AddJsonFile("farmsettings.json", optional: false, reloadOnChange: true)
             // .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
             //var configuration = builder.Build();
-            _ArmadilloRepo = new ArmadilloDBRepository();
+            //_ArmadilloRepo = new ArmadilloDBRepository();
+            _ArmadilloRepo = armadilloRepo;
             _Farm = new ArmadilloFarm();
             _Farm.FarmAnimals.AddRange(_ArmadilloRepo.GetList());
         }
         //[Route("/Armadillo/{name}")]
         //public IActionResult Index(string name="")
         public IActionResult Index()
-        {   
+        {
+            //throw new Exception("An error occurred");
             //FarmSettings farmSettings = new FarmSettings();
             //configuration.Bind(farmSettings);
 //            FarmSettings farmSettings = configuration.Get<FarmSettings>();
