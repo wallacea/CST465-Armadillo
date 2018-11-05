@@ -16,6 +16,9 @@ namespace CST465_Armadillo.Models
         //[RegularExpression("^(Other\\s)?Paul$", ErrorMessage = "Only Paul or Other Paul are valid")]
         
         public string Name { get; set; }
+
+        [DataType(DataType.MultilineText)]
+        public string Description { get; set; }
         [Required]
         [DisplayName("How old is ya?")]
         public int Age { get; set; }
