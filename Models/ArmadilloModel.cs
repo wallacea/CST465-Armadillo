@@ -29,9 +29,9 @@ namespace CST465_Armadillo.Models
 
         public static  List<SelectListItem> PossibleHomelands = new List<SelectListItem>()
         {
-            new SelectListItem("Tanzania", "Tanzania"),
-            new SelectListItem("United States of America", "United States of America"),
-            new SelectListItem("Mexico", "Mexico")
+            new SelectListItem("Tanzania", "1"),
+            new SelectListItem("United States of America", "2"),
+            new SelectListItem("Mexico", "3")
         };
 
 
