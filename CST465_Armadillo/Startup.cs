@@ -26,7 +26,7 @@ namespace CST465_Armadillo
             services.AddMvc();
             services.Configure<FarmSettings>(_Configuration);
             services.Configure<ArmadilloSettings>(_Configuration);
-            services.AddTransient<IArmadilloRepository, ArmadilloDBRepository>();
+            services.AddTransient<IArmadilloRepository, InjectableArmadilloDBRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -42,6 +42,7 @@ namespace CST465_Armadillo
             }
             
             app.UseStaticFiles();
+            app.UseAuthentication();
             app.UseMvcWithDefaultRoute();
             string baseDir = env.ContentRootPath;
 

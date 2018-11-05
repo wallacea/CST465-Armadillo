@@ -10,6 +10,7 @@ namespace CST465_Armadillo.Repositories
     {
         Armadillo Get(int id);
         List<Armadillo> GetList();
+        List<Armadillo> SearchList(string searchText);
         void Save(Armadillo armadillo);
         void Delete(int id);
     }

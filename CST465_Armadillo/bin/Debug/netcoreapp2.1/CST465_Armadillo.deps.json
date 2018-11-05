@@ -24,11 +24,11 @@
     ".NETCoreApp,Version=v2.1": {
       "CST465_Armadillo/1.0.0": {
         "dependencies": {
+          "ArmadilloLib": "1.0.0",
           "Microsoft.AspNetCore.App": "2.1.1",
           "Microsoft.NETCore.App": "2.1.0",
           "Microsoft.VisualStudio.Web.CodeGeneration.Design": "2.1.1",
-          "System.Configuration.ConfigurationManager": "4.5.0",
-          "ArmadilloLib": "1.0.0.0"
+          "System.Configuration.ConfigurationManager": "4.5.0"
         },
         "runtime": {
           "CST465_Armadillo.dll": {}
@@ -545,12 +545,9 @@
           }
         }
       },
-      "ArmadilloLib/1.0.0.0": {
+      "ArmadilloLib/1.0.0": {
         "runtime": {
-          "ArmadilloLib.dll": {
-            "assemblyVersion": "1.0.0.0",
-            "fileVersion": "1.0.0.0"
-          }
+          "ArmadilloLib.dll": {}
         },
         "compile": {
           "ArmadilloLib.dll": {}
@@ -3696,8 +3693,8 @@
       "path": "system.security.cryptography.protecteddata/4.5.0",
       "hashPath": "system.security.cryptography.protecteddata.4.5.0.nupkg.sha512"
     },
-    "ArmadilloLib/1.0.0.0": {
-      "type": "reference",
+    "ArmadilloLib/1.0.0": {
+      "type": "project",
       "serviceable": false,
       "sha512": ""
     },

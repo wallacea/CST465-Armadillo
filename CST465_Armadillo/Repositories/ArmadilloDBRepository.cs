@@ -53,6 +53,7 @@ namespace CST465_Armadillo.Repositories
                             armadillo.ShellHardness = (int) reader["ShellHardness"];
                             armadillo.IsPainted = (bool) reader["IsPainted"];
                             armadillo.Homeland = reader["Homeland"].ToString();
+                            armadillo.Description = reader["Description"].ToString();
                         }
                     }
                 }
@@ -62,7 +63,11 @@ namespace CST465_Armadillo.Repositories
         }
 
 
-
+        public List<Armadillo> SearchList(string searchText)
+        {
+            List<Armadillo> armadilloList = GetList().Where(a => a.Name.ToLower().Contains(searchText.ToLower())).ToList();
+            return armadilloList;
+        }
         public List<Armadillo> GetList()
         {
             List<Armadillo> armadilloList = new List<Armadillo>();
@@ -70,6 +75,7 @@ namespace CST465_Armadillo.Repositories
             {
                 using (SqlCommand command = new SqlCommand("Armadillo_GetList", connection))
                 {
+                    command.CommandType = CommandType.StoredProcedure;
                     connection.Open();
                     using (SqlDataReader reader = command.ExecuteReader())
                     {
@@ -82,6 +88,7 @@ namespace CST465_Armadillo.Repositories
                             armadillo.ShellHardness = (int) reader["ShellHardness"];
                             armadillo.IsPainted = (bool) reader["IsPainted"];
                             armadillo.Homeland = reader["Homeland"].ToString();
+                            armadillo.Description = reader["Description"].ToString();
                             armadilloList.Add(armadillo);
                         }
                     }
@@ -109,6 +116,7 @@ namespace CST465_Armadillo.Repositories
                     command.Parameters.AddWithValue("@ShellHardness", armadillo.ShellHardness);
                     command.Parameters.AddWithValue("@IsPainted", armadillo.IsPainted);
                     command.Parameters.AddWithValue("@Homeland", armadillo.Homeland ?? "USA");
+                    command.Parameters.AddWithValue("@Description", armadillo.Description);
                     command.ExecuteNonQuery();
                 }
             }

@@ -215,5 +215,16 @@ namespace CST465_Armadillo.Controllers
             _ArmadilloRepo.Delete(id);
             return RedirectToAction("Index");
         }
+        
+        public IActionResult Search(string searchText)
+        {
+            List<Armadillo> searchResults = new List<Armadillo>();
+            if (!string.IsNullOrEmpty(searchText))
+            {
+                searchResults = _ArmadilloRepo.SearchList(searchText);
+            }
+            return View(searchResults);
+        }
+
     }
 }
