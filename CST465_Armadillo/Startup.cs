@@ -32,18 +32,18 @@ namespace CST465_Armadillo
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            if (env.IsDevelopment())
+            //if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
-            else
-            {
-                app.UseExceptionHandler("/Home/Error");
-            }
+            //else
+            //{
+            //    app.UseExceptionHandler("/Home/Error");
+            //}
             
             app.UseStaticFiles();
             app.UseAuthentication();
-            app.UseMvcWithDefaultRoute();
+            app.UseMvc(options => options.MapRoute("Default", "{controller=Armadillo}/{action=Index}/{id?}"));
             string baseDir = env.ContentRootPath;
 
             AppDomain.CurrentDomain.SetData("DataDirectory", System.IO.Path.Combine(baseDir, "App_Data"));

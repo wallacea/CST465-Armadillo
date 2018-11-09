@@ -1,6 +1,10 @@
 ﻿@model Armadillo
 
 <div class="card">
-    @Html.DisplayForModel()
+    <div class="card-body">
+        <h3>@Model.Name</h3>
+        <strong>Age: </strong>@Model.Age
+        <p>@Model.Description</p>
+    </div>
     <div class="card-header">Armadillo of the Week</div>
 </div>

@@ -2,54 +2,18 @@
 @model ArmadilloFarm
 
 
-<h1>Armadillos Are As Amazing As Alliteration (Farm)</h1>
-<div>
-    <h2>Farm Settings</h2>
-    @{ FarmSettings settings = ViewBag.FarmSettings;}
-    Max Animals: @settings.MaxAnimals
-    <br />
-    Max per Homeland: @settings.MaxPerHomeland
-</div>
+<h1>My Farm</h1>
+<a href="@Url.Action("TagHelperCreate", "Armadillo")" class="btn btn-primary"><i class="fas fa-user-plus"></i> Add an Armadillo</a>
 <div class="row">
     <div class="col-sm-6">
         <h2>Painted Armadillos</h2>
-
-        <ul class="list-group">
-            @foreach (var armadillo in Model.FarmAnimals.Where(a => a.IsPainted))
-            {
-                <li class="list-group-item">
-                    @armadillo.Name
-                </li>
-
-            }
-        </ul>
+        <partial name="ArmadilloList" model="Model.FarmAnimals.Where(a => a.IsPainted)" />
+        
     </div>
     <div class="col-sm-6">
 
         <h2>Unpainted Armadillos</h2>
-        <ul class="list-group">
-            @foreach (var armadillo in Model.FarmAnimals.Where(a => !a.IsPainted))
-            {
-                <li class="list-group-item">
-                    <div class="row">
-                        <div class="col">
-                            @Html.ActionLink("Edit", "Edit", "Armadillo", new { @id = armadillo.ID })
-                        </div>
-                        <div class="col">
-                            @armadillo.Name
-                        </div>
-                        <div class="col">
-                            <form asp-action="Delete" asp-controller="Armadillo" method="post">
-                                @Html.AntiForgeryToken()
-                                <input type="hidden" name="id" value="@armadillo.ID" />
-                                <button type="submit" class="btn btn-danger">Delete</button>
-                            </form>
-                        </div>
-                    </div>
-                </li>
-
-            }
-        </ul>
+        <partial name="ArmadilloList" model="Model.FarmAnimals.Where(a => !a.IsPainted)" />
     </div>
 
 </div>
@@ -57,4 +21,9 @@
 @section Sidebar{
     <partial name="_FeaturedArmadillo" for="FeaturedArmadillo" />
 }
-
+@section Scripts{ 
+    <script>
+        $(document).ready(function(){
+        });
+    </script>
+}

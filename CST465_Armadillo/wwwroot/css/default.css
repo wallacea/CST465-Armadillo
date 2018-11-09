@@ -9,3 +9,10 @@ html, body{
 .input-validation-error {
     background-color: pink !important;
 }
+.age.form-control {
+    width: 75px;
+}
+footer{
+    color: white;
+    padding:15px;
+}

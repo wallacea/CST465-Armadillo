@@ -18,6 +18,7 @@ namespace CST465_Armadillo.ExtensionMethods
             armadillo.ShellHardness = model.ShellHardness ?? 0;
             armadillo.IsPainted = model.IsPainted;
             armadillo.Homeland = model.Homeland;
+            armadillo.Description = model.Description;
             return armadillo;
         }
         public static ArmadilloModel GetArmadilloModel(this Armadillo armadillo)
@@ -29,7 +30,7 @@ namespace CST465_Armadillo.ExtensionMethods
             model.ShellHardness = armadillo.ShellHardness;
             model.IsPainted = armadillo.IsPainted;
             model.Homeland = armadillo.Homeland;
-
+            model.Description = armadillo.Description;
             return model;
         }
     }
