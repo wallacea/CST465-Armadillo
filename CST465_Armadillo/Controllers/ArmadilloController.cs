@@ -11,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using System.IO;
 using CST465_Armadillo.ExtensionMethods;
 using Microsoft.Extensions.Options;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace CST465_Armadillo.Controllers
 {
@@ -38,12 +39,7 @@ namespace CST465_Armadillo.Controllers
         //public IActionResult Index(string name="")
         public IActionResult Index()
         {
-            //throw new Exception("An error occurred");
-            //FarmSettings farmSettings = new FarmSettings();
-            //configuration.Bind(farmSettings);
-//            FarmSettings farmSettings = configuration.Get<FarmSettings>();
-            ViewBag.FarmSettings = _Settings;
-            //ViewData["FarmSettings"] = _Settings;
+            
             return View(_Farm);
         }
         public PartialViewResult FeaturedArmadillo()
@@ -113,12 +109,7 @@ namespace CST465_Armadillo.Controllers
         }
         protected IActionResult Create(ArmadilloModel model)
         {
-            Armadillo armadillo = new Armadillo();
-            armadillo.Name = model.Name;
-            armadillo.Age = model.Age;
-            armadillo.ShellHardness = model.ShellHardness ?? 0;
-            armadillo.IsPainted = model.IsPainted;
-            armadillo.Homeland = model.Homeland;
+            Armadillo armadillo = model.GetArmadilloObject();
             _ArmadilloRepo.Save(armadillo);
 
             return RedirectToAction("Index", model);
@@ -127,16 +118,7 @@ namespace CST465_Armadillo.Controllers
         public IActionResult Edit(int id)
         {
             var armadillo = _ArmadilloRepo.Get(id);
-            ArmadilloModel model = new ArmadilloModel()
-            {
-                ID = armadillo.ID,
-                Name = armadillo.Name,
-                Age = armadillo.Age,
-                ShellHardness = armadillo.ShellHardness,
-                IsPainted = armadillo.IsPainted,
-                Homeland = armadillo.Homeland
-
-            };
+            ArmadilloModel model = armadillo.GetArmadilloModel();
             return View(model);
         }
         [HttpPost]
@@ -146,15 +128,10 @@ namespace CST465_Armadillo.Controllers
             {
                 return View(model);
             }
-            Armadillo armadillo = new Armadillo();
-            armadillo.ID = model.ID;
-            armadillo.Name = model.Name;
-            armadillo.Age = model.Age;
-            armadillo.ShellHardness = model.ShellHardness ?? 0;
-            armadillo.IsPainted = model.IsPainted;
-            armadillo.Homeland = model.Homeland;
+            Armadillo armadillo = model.GetArmadilloObject();
+
             _ArmadilloRepo.Save(armadillo);
-            return RedirectToAction("Index", model);
+            return RedirectToAction("Index");
         }
         public IActionResult Painted()
         {
@@ -225,6 +202,20 @@ namespace CST465_Armadillo.Controllers
             }
             return View(searchResults);
         }
-
+        public IActionResult View(int id)
+        {
+            Armadillo a = _ArmadilloRepo.Get(id);
+            return View(a.GetArmadilloModel());
+        }
+        public IActionResult Settings()
+        {
+            //throw new Exception("An error occurred");
+            //FarmSettings farmSettings = new FarmSettings();
+            //configuration.Bind(farmSettings);
+            //            FarmSettings farmSettings = configuration.Get<FarmSettings>();
+            ViewBag.FarmSettings = _Settings;
+            //ViewData["FarmSettings"] = _Settings;
+            return View();
+        }
     }
 }

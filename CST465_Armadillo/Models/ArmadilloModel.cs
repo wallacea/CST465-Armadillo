@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -23,6 +24,8 @@ namespace CST465_Armadillo.Models
         [DisplayName("How old is ya?")]
         public int Age { get; set; }
         [Required]
+       [DisplayName("Shell Hardness")]
+       [Range(0, 10)]
         public int? ShellHardness { get; set; }
         [DisplayName("Is Painted?")]
         public bool IsPainted { get; set; }

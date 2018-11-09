@@ -3,7 +3,7 @@
     ViewData["Title"] = "Create";
 }
 
-<h2>Create an Armadillo</h2>
+<h2>Edit an Armadillo</h2>
 
 <form method="post" asp-action="Edit" asp-controller="Armadillo">
     <input type="hidden" name="ID" asp-for="ID" />
@@ -17,18 +17,38 @@
         <textarea asp-for="Description" class="form-control"></textarea>
         <span asp-validation-for="Description"></span>
     </div>
-    <div class="form-group">
-        <label asp-for="Age" class="control-label"></label>
-        <input type="text" asp-for="Age" class="form-control" />
+    <div class="row">
+        <div class="col">
+            <div class="form-group">
+                <label asp-for="Age" class="control-label"></label>
+                <input type="number" asp-for="Age" class="form-control age" />
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-group">
+                <label asp-for="ShellHardness" class="control-label"></label>
+                @*<input type="text" asp-for="ShellHardness" class="form-control" />*@
+                <select asp-for="ShellHardness" class="form-control">
+                    @for (int i = 0; i <= 10; i++)
+                    {
+                        <option value="@i">@i</option>
+                    }
+                </select>
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-check">
+                <label asp-for="IsPainted" class="control-label"></label>
+                <div >
+                    <input type="checkbox" asp-for="IsPainted"  />
+                </div>
+            </div>
+        </div>
+
     </div>
-    <div class="form-group">
-        <label asp-for="ShellHardness" class="control-label"></label>
-        <input type="text" asp-for="ShellHardness" class="form-control" />
-    </div>
-    <div class="form-check">
-        <input type="checkbox" asp-for="IsPainted" class="form-check-input" />
-        <label asp-for="IsPainted" class="form-check-label"></label>
-    </div>
+    
+    
+    
     <div class="form-group">
         <label asp-for="Homeland" class="control-label"></label>
         <select asp-for="Homeland" asp-items="ArmadilloModel.PossibleHomelands" class="form-control"></select>

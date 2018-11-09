@@ -4,9 +4,11 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title</title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link rel="Stylesheet" href="/css/default.css" type="text/css" />
-
+    
+    @*<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>*@
     @*Allow for views to inject links and other items into the page head*@
     @RenderSection("Head", false)
 </head>
@@ -18,14 +20,12 @@
             </a>
             <ul class="navbar-nav">
                 <li class="nav-item @(ViewContext.RouteData.Values["Action"].ToString() == "Index" ? "active" : "")">
-                    @Html.ActionLink("Home", "Index", "Home", null, new { @class = "nav-link" })
+                    @Html.ActionLink("Home", "Index", "Armadillo", null, new { @class = "nav-link" })
                 </li>
-                <li class="nav-item @(ViewContext.RouteData.Values["Controller"].ToString() == "Armadillo" ? "active" : "")">
+                @*<li class="nav-item @(ViewContext.RouteData.Values["Controller"].ToString() == "Armadillo" ? "active" : "")">
                     @Html.ActionLink("The Farm", "Index", "Armadillo", null, new { @class = "nav-link" })
-                </li>
-                <li class="nav-item @(ViewContext.RouteData.Values["Controller"].ToString() == "Armadillo" ? "active" : "")">
-                    @Html.ActionLink("Add an Armadillo", "TagHelperCreate", "Armadillo", null, new { @class = "nav-link" })
-                </li>
+                </li>*@
+                
                 <li class="nav-item @(ViewContext.RouteData.Values["Controller"].ToString() == "Armadillo" ? "active" : "")">
                     @Html.ActionLink("Bulk Edit", "BulkEdit", "Armadillo", null, new { @class = "nav-link" })
                 </li>
@@ -51,12 +51,17 @@
                     </div>
                 </div>
             </main>
-            <footer></footer>
+
         </div>
+        <footer class="bg-dark">
+            <i class="fas fa-copyright"></i> Our Class
+        </footer>
     </div>
     @*Current best practice is to load scripts before the closing body tag.
         This increases rendering speed of the rest of the document *@
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+            crossorigin="anonymous"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.15.1/jquery.validate.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.6/jquery.validate.unobtrusive.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
