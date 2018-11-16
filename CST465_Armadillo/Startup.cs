@@ -9,10 +9,6 @@ using Microsoft.Extensions.DependencyInjection;
 using ArmadilloLib;
 using Microsoft.Extensions.Configuration;
 using CST465_Armadillo.Repositories;
-using Microsoft.AspNetCore.Authentication.Facebook;
-using Microsoft.AspNetCore.Identity;
-using CST465_Armadillo.Models;
-using Microsoft.EntityFrameworkCore;
 
 namespace CST465_Armadillo
 {
@@ -27,18 +23,10 @@ namespace CST465_Armadillo
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            
             services.AddMvc();
             services.Configure<FarmSettings>(_Configuration);
             services.Configure<ArmadilloSettings>(_Configuration);
             services.AddTransient<IArmadilloRepository, InjectableArmadilloDBRepository>();
-            
-                
-            //services.AddAuthentication().AddFacebook(facebookOptions =>
-            //{
-            //    facebookOptions.AppId = _Configuration["Authentication:Facebook:AppId"];
-            //    facebookOptions.AppSecret = _Configuration["Authentication:Facebook:AppSecret"];
-            //});
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
