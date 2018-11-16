@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
@@ -14,9 +15,19 @@ namespace CST465_Armadillo.Controllers
     public class HomeController : Controller
     {
         private ArmadilloSettings _Settings;
-        public HomeController(IOptionsSnapshot<ArmadilloSettings> settings)
+        private RoleManager<IdentityRole> _RoleManager;
+        public HomeController(RoleManager<IdentityRole> rm, IOptionsSnapshot<ArmadilloSettings> settings)
         {
             _Settings = settings.Value;
+            _RoleManager = rm;
+        }
+        [HttpPost]
+        public IActionResult CreateRole(string RoleName)
+        {
+            IdentityRole role = new IdentityRole();
+            role.Name = RoleName;
+            IdentityResult result = _RoleManager.CreateAsync(role).Result;
+            return RedirectToAction("Index");
         }
         public IActionResult Index()
         {

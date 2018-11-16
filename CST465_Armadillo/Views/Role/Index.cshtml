@@ -1,13 +1,10 @@
-﻿@using CST465_Armadillo
-@{ ArmadilloSettings settings = (ArmadilloSettings) ViewData["Settings"];}
-@settings.DefaultName
-@using Microsoft.AspNetCore.Identity;
+﻿
 @inject RoleManager<IdentityRole> RoleMan
 @inject UserManager<IdentityUser> UserMan
 
 
 
-<form asp-action="CreateRole" asp-controller="Home">
+<form asp-action="CreateRole" asp-controller="Role">
     @Html.AntiForgeryToken()
     <label for="RoleName" class="control-label">Role Name</label>
     <input type="text" id="RoleName" name="RoleName" class="form-control" />
@@ -34,3 +31,13 @@
         </ul>
     </div>
 </div>
+<form asp-action="AddUserToRole" asp-controller="Role" method="post">
+    @Html.AntiForgeryToken()
+    @Html.Hidden("Email", User.Identity.Name)
+    @Html.Hidden("RoleName", "Admins")
+    <button type="submit" class="btn btn-primary">Make me admin</button>
+</form>
+@foreach(var user in UserMan.GetUsersInRoleAsync("Admins").Result)
+{
+<div>@user.UserName</div>
+}

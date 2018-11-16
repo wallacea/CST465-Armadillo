@@ -32,7 +32,7 @@ namespace CST465_Armadillo.Models
         
         [UIHint("HomelandDropdown")]
         public string Homeland { get; set; }
-
+        public List<Homeland> OtherPossibleHomelands { get; set; }
         public static  List<SelectListItem> PossibleHomelands = new List<SelectListItem>()
         {
             new SelectListItem("Tanzania", "1"),
@@ -41,5 +41,10 @@ namespace CST465_Armadillo.Models
         };
 
 
+    }
+    public class Homeland
+    {
+        public int ID { get; set; }
+        public string Name { get; set; }
     }
 }

@@ -19,21 +19,22 @@
                 <img src="/img/ArmadilloLogo.png" alt="Armadillo Corp." />
             </a>
             <ul class="navbar-nav">
-                <li class="nav-item @(ViewContext.RouteData.Values["Action"].ToString() == "Index" ? "active" : "")">
+                <li class="nav-item @((ViewContext.RouteData.Values["Controller"]?.ToString() ?? "") == "Index" ? "active" : "")">
                     @Html.ActionLink("Home", "Index", "Armadillo", null, new { @class = "nav-link" })
                 </li>
                 @*<li class="nav-item @(ViewContext.RouteData.Values["Controller"].ToString() == "Armadillo" ? "active" : "")">
-                    @Html.ActionLink("The Farm", "Index", "Armadillo", null, new { @class = "nav-link" })
-                </li>*@
-                
-                <li class="nav-item @(ViewContext.RouteData.Values["Controller"].ToString() == "Armadillo" ? "active" : "")">
+                @Html.ActionLink("The Farm", "Index", "Armadillo", null, new { @class = "nav-link" })
+            </li>*@
+
+                <li class="nav-item @((ViewContext.RouteData.Values["Controller"]?.ToString() ?? "") == "Armadillo" ? "active" : "")">
                     @Html.ActionLink("Bulk Edit", "BulkEdit", "Armadillo", null, new { @class = "nav-link" })
                 </li>
-                <li class="nav-item @(ViewContext.RouteData.Values["Controller"].ToString() == "Armadillo" ? "active" : "")">
+                <li class="nav-item @((ViewContext.RouteData.Values["Controller"]?.ToString() ?? "") == "Armadillo" ? "active" : "")">
                     @Html.ActionLink("Search", "Search", "Armadillo", null, new { @class = "nav-link" })
                 </li>
 
             </ul>
+            <partial name="_LoginPartial" />
         </nav>
     </div>
     <div class="container">

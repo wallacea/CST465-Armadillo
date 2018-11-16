@@ -68,7 +68,14 @@ namespace CST465_Armadillo.Controllers
         [HttpGet]
         public IActionResult TagHelperCreate()
         {
-            return View();
+            ArmadilloModel model = new ArmadilloModel();
+            model.OtherPossibleHomelands = new List<Homeland>
+            {
+                new Homeland(){ID=1, Name="United States of America"},
+                new Homeland(){ID=2, Name="Tanzania"},
+                new Homeland(){ID=3, Name="Mexico"}
+            };
+            return View(model);
         }
         [HttpPost]
         public IActionResult HTMLCreate(ArmadilloModel model)

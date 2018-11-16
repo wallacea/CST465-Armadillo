@@ -10,6 +10,7 @@ namespace CST465_Armadillo
         public string DatabaseConfigFile { get; set; }
         public string DefaultName { get; set; }
         public int DefaultAge { get; set; }
+        public Dictionary<string, string> ConnectionStrings { get; set; }
         
     }
 }

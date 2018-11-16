@@ -19,23 +19,23 @@ namespace CST465_Armadillo.Repositories
         {
             _Settings = armadilloConfig.Value;
         }
-        public string GetConnectionString()
-        {
-            IConfigurationBuilder builder = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
-            .AddJsonFile(_Settings.DatabaseConfigFile, optional: false, reloadOnChange: true)
-            .AddJsonFile("farmsettings.json", optional: false, reloadOnChange: true);
+        //public string GetConnectionString()
+        //{
+        //    IConfigurationBuilder builder = new ConfigurationBuilder()
+        //        .SetBasePath(Directory.GetCurrentDirectory())
+        //    .AddJsonFile(_Settings.DatabaseConfigFile, optional: false, reloadOnChange: true)
+        //    .AddJsonFile("farmsettings.json", optional: false, reloadOnChange: true);
 
 
-            var configuration = builder.Build();
+        //    var configuration = builder.Build();
 
-            return configuration.GetConnectionString("DB_TheFarm");
+        //    return configuration.GetConnectionString("DB_TheFarm");
 
-        }
+        //}
         public Armadillo Get(int id)
         {
             Armadillo armadillo = null;
-            using (SqlConnection connection = new SqlConnection(GetConnectionString()))
+            using (SqlConnection connection = new SqlConnection(_Settings.ConnectionStrings["DB_TheFarm"]))
             {
                 using (SqlCommand command = new SqlCommand("Armadillo_Get", connection))
                 {
@@ -65,7 +65,7 @@ namespace CST465_Armadillo.Repositories
         public List<Armadillo> SearchList(string searchText)
         {
             List<Armadillo> armadilloList = new List<Armadillo>();
-            using (SqlConnection connection = new SqlConnection(GetConnectionString()))
+            using (SqlConnection connection = new SqlConnection(_Settings.ConnectionStrings["DB_TheFarm"]))
             {
                 using (SqlCommand command = new SqlCommand("SELECT * FROM Armadillo WHERE Name like '%" + searchText + "%'", connection))
                 {
@@ -94,7 +94,7 @@ namespace CST465_Armadillo.Repositories
         public List<Armadillo> GetList()
         {
             List<Armadillo> armadilloList = new List<Armadillo>();
-            using (SqlConnection connection = new SqlConnection(GetConnectionString()))
+            using (SqlConnection connection = new SqlConnection(_Settings.ConnectionStrings["DB_TheFarm"]))
             {
                 using (SqlCommand command = new SqlCommand("SELECT * FROM Armadillo", connection))
                 {
@@ -124,7 +124,7 @@ namespace CST465_Armadillo.Repositories
 
         public void Save(Armadillo armadillo)
         {
-            using (SqlConnection connection = new SqlConnection(GetConnectionString()))
+            using (SqlConnection connection = new SqlConnection(_Settings.ConnectionStrings["DB_TheFarm"]))
             {
                 using (SqlCommand command = new SqlCommand("Armadillo_InsertUpdate", connection))
                 {
@@ -146,7 +146,7 @@ namespace CST465_Armadillo.Repositories
         }
         public void Delete(int id)
         {
-            using (SqlConnection connection = new SqlConnection(GetConnectionString()))
+            using (SqlConnection connection = new SqlConnection(_Settings.ConnectionStrings["DB_TheFarm"]))
             {
                 using (SqlCommand command = new SqlCommand("Armadillo_Delete", connection))
                 {
