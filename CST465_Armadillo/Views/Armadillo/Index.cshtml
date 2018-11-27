@@ -23,7 +23,14 @@
 }
 @section Scripts{ 
     <script>
-        $(document).ready(function(){
+        $(document).ready(function () {
+            //setInterval(refreshArmadillos, 1000)
+            
         });
+        function refreshArmadillos() {
+            $.getJSON("/api/armadillo", function (data) {
+                debugger;
+            });
+        }
     </script>
 }

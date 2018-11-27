@@ -9,8 +9,8 @@ namespace CST465_Armadillo.Repositories
     public interface IArmadilloRepository
     {
         Armadillo Get(int id);
-        List<Armadillo> GetList();
-        List<Armadillo> SearchList(string searchText);
+        Task<List<Armadillo>> GetList();
+        Task<List<Armadillo>> SearchList(string searchText);
         void Save(Armadillo armadillo);
         void Delete(int id);
     }

@@ -62,7 +62,7 @@ namespace CST465_Armadillo.Repositories
             return armadillo;
         }
 
-        public List<Armadillo> SearchList(string searchText)
+        public async Task<List<Armadillo>> SearchList(string searchText)
         {
             List<Armadillo> armadilloList = new List<Armadillo>();
             using (SqlConnection connection = new SqlConnection(_Settings.ConnectionStrings["DB_TheFarm"]))
@@ -91,7 +91,7 @@ namespace CST465_Armadillo.Repositories
             return armadilloList;
         }
 
-        public List<Armadillo> GetList()
+        public async Task<List<Armadillo>> GetList()
         {
             List<Armadillo> armadilloList = new List<Armadillo>();
             using (SqlConnection connection = new SqlConnection(_Settings.ConnectionStrings["DB_TheFarm"]))

@@ -9,7 +9,10 @@ using Microsoft.Extensions.DependencyInjection;
 using ArmadilloLib;
 using Microsoft.Extensions.Configuration;
 using CST465_Armadillo.Repositories;
-
+using Microsoft.AspNetCore.Authentication.Facebook;
+using Microsoft.AspNetCore.Identity;
+using CST465_Armadillo.Models;
+using Microsoft.EntityFrameworkCore;
 namespace CST465_Armadillo
 {
     public class Startup
@@ -23,10 +26,15 @@ namespace CST465_Armadillo
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddMemoryCache();
+            //services.AddResponseCaching();
             services.AddMvc();
+           
             services.Configure<FarmSettings>(_Configuration);
             services.Configure<ArmadilloSettings>(_Configuration);
-            services.AddTransient<IArmadilloRepository, InjectableArmadilloDBRepository>();
+            services.AddTransient<IArmadilloRepository, ArmadilloCachingDBRepository>();
+            //services.AddTransient<IArmadilloRepository, ArmadilloDBRepository>();
+            services.AddTransient<ICacheRepository, CacheRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -40,9 +48,22 @@ namespace CST465_Armadillo
             //{
             //    app.UseExceptionHandler("/Home/Error");
             //}
-            
+            //app.UseResponseCaching();
+            //app.Use(async (context, next) =>
+            //{
+            //    context.Response.GetTypedHeaders().CacheControl =
+            //    new Microsoft.Net.Http.Headers.CacheControlHeaderValue()
+            //    {
+            //        Public = true,
+            //        MaxAge = TimeSpan.FromSeconds(10)
+            //    };
+            //    context.Response.Headers[Microsoft.Net.Http.Headers.HeaderNames.Vary] =
+            //    new string[] { "Accept-Encoding" };
+            //    await next();
+            //});
             app.UseStaticFiles();
             app.UseAuthentication();
+            
             app.UseMvc(options => options.MapRoute("Default", "{controller=Armadillo}/{action=Index}/{id?}"));
             string baseDir = env.ContentRootPath;
 

@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using ArmadilloLib;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 
@@ -19,21 +20,10 @@ namespace CST465_Armadillo.Repositories
         {
             _Settings = armadilloConfig.Value;
         }
-        //public string GetConnectionString()
-        //{
-        //    IConfigurationBuilder builder = new ConfigurationBuilder()
-        //        .SetBasePath(Directory.GetCurrentDirectory())
-        //    .AddJsonFile(_Settings.DatabaseConfigFile, optional: false, reloadOnChange: true)
-        //    .AddJsonFile("farmsettings.json", optional: false, reloadOnChange: true);
-
-
-        //    var configuration = builder.Build();
-
-        //    return configuration.GetConnectionString("DB_TheFarm");
-
-        //}
-        public Armadillo Get(int id)
+        
+        public virtual Armadillo Get(int id)
         {
+            
             Armadillo armadillo = null;
             using (SqlConnection connection = new SqlConnection(_Settings.ConnectionStrings["DB_TheFarm"]))
             {
@@ -63,12 +53,12 @@ namespace CST465_Armadillo.Repositories
         }
 
 
-        public List<Armadillo> SearchList(string searchText)
+        public virtual async Task<List<Armadillo>> SearchList(string searchText)
         {
-            List<Armadillo> armadilloList = GetList().Where(a => a.Name.ToLower().Contains(searchText.ToLower())).ToList();
+            List<Armadillo> armadilloList = (await GetList()).Where(a => a.Name.ToLower().Contains(searchText.ToLower())).ToList();
             return armadilloList;
         }
-        public List<Armadillo> GetList()
+        public virtual async Task<List<Armadillo>> GetList()
         {
             List<Armadillo> armadilloList = new List<Armadillo>();
             using (SqlConnection connection = new SqlConnection(_Settings.ConnectionStrings["DB_TheFarm"]))
@@ -76,8 +66,8 @@ namespace CST465_Armadillo.Repositories
                 using (SqlCommand command = new SqlCommand("Armadillo_GetList", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
-                    connection.Open();
-                    using (SqlDataReader reader = command.ExecuteReader())
+                    await connection.OpenAsync();
+                    using (SqlDataReader reader = await command.ExecuteReaderAsync())
                     {
                         while (reader.Read())
                         {
@@ -99,7 +89,7 @@ namespace CST465_Armadillo.Repositories
         }
 
 
-        public void Save(Armadillo armadillo)
+        public virtual void Save(Armadillo armadillo)
         {
             using (SqlConnection connection = new SqlConnection(_Settings.ConnectionStrings["DB_TheFarm"]))
             {
@@ -121,7 +111,7 @@ namespace CST465_Armadillo.Repositories
                 }
             }
         }
-        public void Delete(int id)
+        public virtual void Delete(int id)
         {
             using (SqlConnection connection = new SqlConnection(_Settings.ConnectionStrings["DB_TheFarm"]))
             {

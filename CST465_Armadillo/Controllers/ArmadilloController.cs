@@ -32,14 +32,15 @@ namespace CST465_Armadillo.Controllers
             //var configuration = builder.Build();
             //_ArmadilloRepo = new ArmadilloDBRepository();
             _ArmadilloRepo = armadilloRepo;
-            _Farm = new ArmadilloFarm();
-            _Farm.FarmAnimals.AddRange(_ArmadilloRepo.GetList());
+            
+            
         }
         //[Route("/Armadillo/{name}")]
         //public IActionResult Index(string name="")
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            
+            _Farm = new ArmadilloFarm();
+            _Farm.FarmAnimals.AddRange(await _ArmadilloRepo.GetList());
             return View(_Farm);
         }
         public PartialViewResult FeaturedArmadillo()
@@ -119,7 +120,7 @@ namespace CST465_Armadillo.Controllers
             Armadillo armadillo = model.GetArmadilloObject();
             _ArmadilloRepo.Save(armadillo);
 
-            return RedirectToAction("Index", model);
+            return RedirectToAction("Index");
         }
         [HttpGet]
         public IActionResult Edit(int id)
@@ -200,12 +201,12 @@ namespace CST465_Armadillo.Controllers
             return RedirectToAction("Index");
         }
         
-        public IActionResult Search(string searchText)
+        public async Task<IActionResult> Search(string searchText)
         {
             List<Armadillo> searchResults = new List<Armadillo>();
             if (!string.IsNullOrEmpty(searchText))
             {
-                searchResults = _ArmadilloRepo.SearchList(searchText);
+                searchResults = await _ArmadilloRepo.SearchList(searchText);
             }
             return View(searchResults);
         }
@@ -222,6 +223,10 @@ namespace CST465_Armadillo.Controllers
             //            FarmSettings farmSettings = configuration.Get<FarmSettings>();
             ViewBag.FarmSettings = _Settings;
             //ViewData["FarmSettings"] = _Settings;
+            return View();
+        }
+        public IActionResult RefreshingList()
+        {
             return View();
         }
     }

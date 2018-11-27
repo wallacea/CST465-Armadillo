@@ -1,0 +1,34 @@
+﻿
+<table id="armadilloTable" class="table">
+    <thead>
+        <tr>
+            <td>Name</td>
+            <td>Age</td>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+<div id="retrievedData"></div>
+@section Scripts
+    {
+    <script>
+
+        $(document).ready(function () {
+            //$.get('/Armadillo/Index', function (data) {
+            //    //debugger;
+            //    $('#retrievedData').html(data);
+            //})
+            setInterval(refreshArmadillos, 1000)
+
+        });
+        function refreshArmadillos() {
+            $.getJSON("/api/armadillo", function (data) {
+                //debugger;
+                $('#armadilloTable tbody').html('');
+                data.forEach(function (item) {
+                    $('#armadilloTable tbody').append('<tr><td>' + item.name + '</td><td>' + item.age + '</td></tr>')
+                });
+            });
+        }
+    </script>
+}
