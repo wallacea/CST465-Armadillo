@@ -19,7 +19,9 @@ namespace CST465_Armadillo.Areas.Identity
                     options.UseSqlServer(
                         context.Configuration.GetConnectionString("CST465_ArmadilloContextConnection")));
 
-                services.AddDefaultIdentity<IdentityUser>(options =>
+                //This is the "Old way", but is required to make the 
+                //[Authorize(Roles="Admins")] functionality to work
+                services.AddIdentity<IdentityUser, IdentityRole>(options =>
                 {
                     options.Password.RequireDigit = false;
                     options.Password.RequireLowercase = false;
@@ -28,8 +30,23 @@ namespace CST465_Armadillo.Areas.Identity
                     options.Password.RequiredLength = 8;
                     options.Password.RequiredUniqueChars = 1;
                 })
-                    .AddRoles<IdentityRole>()
-                    .AddEntityFrameworkStores<CST465_ArmadilloContext>();
+                .AddRoleManager<RoleManager<IdentityRole>>()
+                .AddDefaultUI()
+                .AddDefaultTokenProviders()
+                .AddEntityFrameworkStores<CST465_ArmadilloContext>();
+
+                //This is the default way that .NET Core recommends
+                //services.AddDefaultIdentity<IdentityUser>(options =>
+                //{
+                //    options.Password.RequireDigit = false;
+                //    options.Password.RequireLowercase = false;
+                //    options.Password.RequireNonAlphanumeric = false;
+                //    options.Password.RequireUppercase = true;
+                //    options.Password.RequiredLength = 8;
+                //    options.Password.RequiredUniqueChars = 1;
+                //})
+                //    .AddRoles<IdentityRole>()
+                //    .AddEntityFrameworkStores<CST465_ArmadilloContext>();
             });
         }
     }

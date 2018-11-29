@@ -12,6 +12,7 @@ using System.IO;
 using CST465_Armadillo.ExtensionMethods;
 using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace CST465_Armadillo.Controllers
 {
@@ -21,9 +22,11 @@ namespace CST465_Armadillo.Controllers
         private IArmadilloRepository _ArmadilloRepo;
         private ArmadilloFarm _Farm;
         private FarmSettings _Settings;
-        public ArmadilloController(IOptionsSnapshot<FarmSettings> settings, IArmadilloRepository armadilloRepo)
+        private IMemoryCache _Cache;
+        public ArmadilloController(IMemoryCache cache,IOptionsSnapshot<FarmSettings> settings, IArmadilloRepository armadilloRepo)
         {
             _Settings = settings.Value;
+            _Cache = cache;
             //IConfigurationBuilder builder = new ConfigurationBuilder()
             //     .SetBasePath(Directory.GetCurrentDirectory())
 
@@ -200,7 +203,34 @@ namespace CST465_Armadillo.Controllers
             _ArmadilloRepo.Delete(id);
             return RedirectToAction("Index");
         }
-        
+        [HttpGet]
+        public IActionResult AddInstructions()
+        {
+            List<string> instructions = (List<string>)_Cache.Get("InstructionList");
+            if(instructions == null)
+            {
+                instructions = new List<string>();
+            }
+            return View(instructions);
+        }
+        [HttpPost]
+        public IActionResult SaveInstruction(string instruction)
+        {
+            List<string> instructions = (List<string>) _Cache.Get("InstructionList");
+            if (instructions == null)
+            {
+                instructions = new List<string>();
+            }
+            instructions.Add(instruction);
+            _Cache.Set("InstructionList", instructions);
+            return RedirectToAction("AddInstructions");
+        }
+        [HttpPost]
+        public IActionResult AddInstructions (List<string> instructions)
+        {
+            _Cache.Set("InstructionList",instructions);
+            return RedirectToAction("AddInstructions");
+        }
         public async Task<IActionResult> Search(string searchText)
         {
             List<Armadillo> searchResults = new List<Armadillo>();
