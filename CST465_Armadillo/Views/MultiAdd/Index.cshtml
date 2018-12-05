@@ -1,0 +1,17 @@
+﻿@model List<Student>
+
+@foreach(var student in Model)
+{
+    <div>
+        <h2>Name</h2>
+        <p>@student.Name<a asp-controller="MultiAdd" asp-action="AddEditStudent" asp-route-id="@student.Name">Edit</a></p>
+        <h2>Courses</h2>
+        <ul>
+            @foreach(var course in student.Courses)
+            {
+                <li>@course</li>
+            }
+        </ul>
+    </div>
+}
+<a asp-controller="MultiAdd" asp-action="AddEditStudent"><i class="fas fa-plus"></i> Add New Student</a>

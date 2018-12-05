@@ -35,6 +35,7 @@ namespace CST465_Armadillo
             services.AddTransient<IArmadilloRepository, ArmadilloCachingDBRepository>();
             //services.AddTransient<IArmadilloRepository, ArmadilloDBRepository>();
             services.AddTransient<ICacheRepository, CacheRepository>();
+            services.AddTransient<IStudentRepository, StudentRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

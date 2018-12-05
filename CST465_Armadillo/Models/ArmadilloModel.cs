@@ -11,6 +11,7 @@ namespace CST465_Armadillo.Models
 {
     public class ArmadilloModel
     {
+        
         public int ID { get; set; }
         [Required(ErrorMessage = "You must give it a name!")]
         [DisplayName("Armadillo's Name")]

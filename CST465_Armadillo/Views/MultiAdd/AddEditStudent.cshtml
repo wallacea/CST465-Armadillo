@@ -1,0 +1,51 @@
+﻿@model Student
+
+<form asp-controller="MultiAdd" asp-action="AddEditStudent" method="post">
+    <div class="form-group">
+        <label asp-for="Name" class="control-label"></label>
+        <input type="text" asp-for="Name" class="form-control" />
+    </div>
+    <h3>Courses</h3>
+    <div id="courseList">
+
+        @if (Model.Courses.Count == 0)
+        {
+            <div class="form-group course">
+                <label for="Courses_0" class="control-label">Course ID</label>
+                <input type="text" id="Courses_0" name="Courses[0]" class="form-control" />
+            </div>
+        }
+        else
+        {
+            @for (int i = 0; i < Model.Courses.Count; i++)
+            {
+                <div class="form-group course">
+                    <label asp-for="@Model.Courses[i]" class="control-label">Course ID</label>
+                    <input type="text" asp-for="@Model.Courses[i]" class="form-control" />
+                </div>
+            }
+
+        }
+
+    </div>
+    <button id="AddCourse" type="button" class="btn btn-default"><i class="fas fa-plus"></i> Add Course</button>
+    <button type="submit" class="btn btn-primary">Save Student</button>
+</form>
+
+@section Scripts
+    {
+    
+    <script>
+        var courseTemplate = `<div class="form-group course">
+            <label for="Courses_{cCount}" class="control-label"> Course ID</label>
+            <input type="text" id="Courses_{cCount}" name="Courses[{cCount}]" class="form-control" />
+        </div>`; 
+        $(document).ready(function () {
+            $('#AddCourse').click(function () {
+                var courseCount = $('#courseList .course').length;
+                $('#courseList').append(courseTemplate.replace(/{cCount}/g, courseCount));
+            });
+        });
+
+    </script>
+}
